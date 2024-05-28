@@ -159,8 +159,9 @@ bool MainScene::getNearObject(double _x, double _y, double _z) {
 
 void MainScene::selectObject() {
   // selectingMode = !selectingMode;
+  // if (!selectingMode) return;
   selectingMode = true;
-  // glPushMatrix();
+  //  glPushMatrix();
   showWorld();
   GLubyte color[3];
   glReadPixels(mousePos[0], size().height() - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);
@@ -176,6 +177,7 @@ void MainScene::selectObject() {
 	  cubeList[i].setSelected(true);
 	  qDebug() << color[0] << color[1] << color[2];
 	  qDebug() << r << g << b;
+	  qDebug() << "попал";
 	  selectingMode = false;
 	  return;
 	}
@@ -192,8 +194,8 @@ void MainScene::cubeCreateSlot(vec3 _centerPoint, float _edge, GLubyte _edgeRed,
 							   bool _isPlaneEneble, vec3 _rotation) {
   cubeList.append(Cube(_centerPoint, _edge, _edgeRed, _edgeGreen, _edgeBlue, _edgeAlpha, _planeRed, _planeGreen, _planeBlue, _planeAlpha,
 					   _isEdgeEneble, _isPlaneEneble, _rotation, ID));
-  ++ID;
-  // ID += 50;
+  //++ID;
+  ID += IDShift;
 }
 
 void MainScene::mouseMoveEvent(QMouseEvent* event) {
@@ -216,4 +218,7 @@ void MainScene::mouseMoveEvent(QMouseEvent* event) {
   // qDebug() << event->pos();
 }
 
-void MainScene::mousePressEvent(QMouseEvent* event) { selectObject(); }
+void MainScene::mousePressEvent(QMouseEvent* event) {
+  selectObject();
+  // selectObject();
+}

@@ -47,7 +47,8 @@ class MainScene : public QOpenGLWidget, protected QOpenGLFunctions {
   void showOrts();
   void clientToOpenGL(int _x, int _y, double* _ox, double* _oy, double* _oz);
   bool getNearObject(double _x, double _y, double _z);
-  int ID = 1;
+  int ID = 50;
+  int IDShift = 10;
   bool selectingMode = false;
   int mousePos[2] = {0, 0};
 
