@@ -76,8 +76,9 @@ void MainScene::paintGL() {
   glPushMatrix();
   ModuleCamera::moveCamera();
   if (!selectingMode) showOrts();
-  // glPopMatrix();
   showWorld();
+
+  glPopMatrix();
   // SwapBuffers (HDC);
   // double x, y, z;
   // int xpos, ypos;
@@ -90,18 +91,11 @@ void MainScene::paintGL() {
 
 void MainScene::showWorld() {
   // glPushMatrix();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  if (selectingMode)
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  else
-	glClearColor(0.3f, 0.4f, 0.5f, 1.0f);
-
   for (int i = 0; i < cubeList.size(); ++i) {
 	cubeList[i].setSelectingMode(selectingMode);
 	cubeList[i].show();
   }
-  glPopMatrix();
+  // glPopMatrix();
 }
 
 void MainScene::showOrts() {
