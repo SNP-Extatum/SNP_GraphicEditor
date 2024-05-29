@@ -55,7 +55,7 @@ class MainScene : public QOpenGLWidget, protected QOpenGLFunctions {
   int mousePos[2] = {0, 0};
   int windowSize[2] = {0, 0};
 
-  HWND hwnd;  // ЧТО ЭТО - (не знаю, но похоже нужное)
+  HWND hwnd;  // ЧТО ЭТО - (не знаю, но похоже нужное) Да нужное. это хэндл твоего окна!
 
   Form_cube* formCube;
   Cube worldBox = Cube(vec3(0, 0, 0), 200, 50, 50, 50, 255, 0, 0, 0, 0, true, false, vec3(0, 0, 0), 0);

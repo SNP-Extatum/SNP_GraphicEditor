@@ -183,10 +183,12 @@ void MainScene::selectObject() {
 
   RECT rect;
   GLubyte color[3];
+  hwnd = (HWND)this->winId();
   GetClientRect(hwnd, &rect);  // (последнее) ошибка тут, не верно считается область, но ёмаё, а какая разница то, как считать координаты?
+  qDebug() << hwnd<<rect.top <<rect.left<<rect.right<<rect.bottom;
   qDebug() << rect.bottom - mousePos[1];
-  // glReadPixels(mousePos[0], mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // вот так он хоть что-то видит
-  glReadPixels(mousePos[0], rect.bottom - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // ЧТО ТО НЕ ТАК С ЭТОЙ ШТУКОЙ
+  glReadPixels(mousePos[0], mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // вот так он хоть что-то видит
+  //glReadPixels(mousePos[0], rect.bottom - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // ЧТО ТО НЕ ТАК С ЭТОЙ ШТУКОЙ
   qDebug() << color[0] << color[1] << color[2];
 
   int r = 0;
