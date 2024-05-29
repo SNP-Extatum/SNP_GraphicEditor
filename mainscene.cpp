@@ -19,7 +19,7 @@ void MainScene::initializeGL() {
   // glFrustum(-1, 1, -1, 1, 1, 100);
 
   // glLoadIdentity();
-  // glOrtho(-4, 4, -4, 4, 0, 800);
+  //  glOrtho(-4, 4, -4, 4, 0, 800);
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
@@ -72,7 +72,7 @@ void MainScene::paintGL() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   else
 	glClearColor(0.3f, 0.4f, 0.5f, 1.0f);
-
+  // glLoadIdentity();
   glPushMatrix();
   ModuleCamera::moveCamera();
   if (!selectingMode) showOrts();
@@ -92,10 +92,19 @@ void MainScene::paintGL() {
 void MainScene::showWorld() {
   // glPushMatrix();
   for (int i = 0; i < cubeList.size(); ++i) {
-	cubeList[i].setSelectingMode(selectingMode);
+	cubeList[i].setSelectingMode(false);
 	cubeList[i].show();
   }
   // glPopMatrix();
+}
+
+void MainScene::showMaskWorld() {
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  for (int i = 0; i < cubeList.size(); ++i) {
+	cubeList[i].setSelectingMode(true);
+	cubeList[i].show();
+  }
 }
 
 void MainScene::showOrts() {
@@ -159,32 +168,42 @@ bool MainScene::getNearObject(double _x, double _y, double _z) {
 
 void MainScene::selectObject() {
   // selectingMode = !selectingMode;
-  // if (!selectingMode) return;
-  selectingMode = true;
-  //  glPushMatrix();
-  showWorld();
+  // selectingMode = true;
+  showMaskWorld();
+  // selectingMode = false;
+
+  // int x;
+  // int y;
+  // LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
+  //   if (message == WM_LBUTTONDOWN){
+  //	  x = LOWORD (lParam);
+  //   }
+  //};
+
+  RECT rect;
   GLubyte color[3];
-  glReadPixels(mousePos[0], size().height() - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);
+  GetClientRect(hwnd, &rect);  // (последнее) ошибка тут, не верно считается область, но ёмаё, а какая разница то, как считать координаты?
+  qDebug() << rect.bottom - mousePos[1];
+  // glReadPixels(mousePos[0], mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // вот так он хоть что-то видит
+  glReadPixels(mousePos[0], rect.bottom - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // ЧТО ТО НЕ ТАК С ЭТОЙ ШТУКОЙ
+  qDebug() << color[0] << color[1] << color[2];
+
   int r = 0;
   int g = 0;
   int b = 0;
   // Cubes
   for (int i = 0; i < cubeList.size(); ++i) {
 	cubeList[i].setSelected(false);
+	qDebug() << r << g << b;
 
 	cubeList[i].getIDs(&r, &g, &b);
 	if (r == color[0] && g == color[1] && b == color[2]) {
 	  cubeList[i].setSelected(true);
-	  qDebug() << color[0] << color[1] << color[2];
-	  qDebug() << r << g << b;
 	  qDebug() << "попал";
 	  selectingMode = false;
 	  return;
 	}
   }
-  qDebug() << color[0] << color[1] << color[2];
-  qDebug() << r << g << b;
-  selectingMode = false;
 }
 
 void MainScene::cubeInfoSlot(QString a) { qDebug() << a; }

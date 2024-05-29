@@ -44,6 +44,7 @@ class MainScene : public QOpenGLWidget, protected QOpenGLFunctions {
   QTimer* frameTimer;
   QList<Cube> cubeList;
   void showWorld();
+  void showMaskWorld();
   void showOrts();
   void clientToOpenGL(int _x, int _y, double* _ox, double* _oy, double* _oz);
   bool getNearObject(double _x, double _y, double _z);
@@ -51,6 +52,9 @@ class MainScene : public QOpenGLWidget, protected QOpenGLFunctions {
   int IDShift = 10;
   bool selectingMode = false;
   int mousePos[2] = {0, 0};
+  int windowSize[2] = {0, 0};
+
+  HWND hwnd;  // ЧТО ЭТО - (не знаю, но похоже нужное)
 
   Form_cube* formCube;
   Cube worldBox = Cube(vec3(0, 0, 0), 200, 50, 50, 50, 255, 0, 0, 0, 0, true, false, vec3(0, 0, 0), 0);
