@@ -164,6 +164,7 @@ bool MainScene::getNearObject(double _x, double _y, double _z) {
   //  cubeList[nearestID].isSelected = true;
   //  return true;
   //}
+  return false;
 }
 
 void MainScene::selectObject() {

@@ -1,6 +1,7 @@
 #ifndef MAINSCENE_HPP
 #define MAINSCENE_HPP
 
+#include <windows.h>
 #include <GL/glu.h>
 
 #include <QDebug>
