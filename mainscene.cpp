@@ -16,38 +16,9 @@ void MainScene::setFormCube(Form_cube* form) {
 void MainScene::initializeGL() {
   initializeOpenGLFunctions();
   ModuleCamera::turnGLFrustum();
-  // glFrustum(-1, 1, -1, 1, 1, 100);
-
-  // glLoadIdentity();
-  //  glOrtho(-4, 4, -4, 4, 0, 800);
-
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  //  glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-  // setOrtho(true);
-  //  glFrustum(-1, 1, -1, 1, 1, 80);
-  //   Set up the rendering context, load shaders and other resources, etc.:
-  //   QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-  //   f->glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  //   f->glEnable(GL_DEPTH_TEST);  // буффер глубины
-  //   f->glEnable(GL_CULL_FACE);   // отсечение задних граней (чтобы не рисовались)
-
-  // testProgram.create();
-  //  if (!testProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/gravity.fsh")) {
-  //..qDebug() << "Компиляции шейдера НЕуспешна";
-  //..close();
-  // } else {
-  //..qDebug() << "Компиляции шейдера успешна";
-  // }
-  //  if (!testProgram.link()) {
-  //..qDebug() << "Линковка программы НЕуспешна";
-  //..close();
-  // } else {
-  //..qDebug() << "Линковка программы успешна";
-  // }
-  // testProgram.bind();
 }
 
 void MainScene::resizeGL(int w, int h) {
@@ -64,7 +35,6 @@ void MainScene::resizeGL(int w, int h) {
 }
 
 void MainScene::paintGL() {
-  // selectObject();
   shaderTime += shaderdTime;
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -72,21 +42,12 @@ void MainScene::paintGL() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   else
 	glClearColor(0.3f, 0.4f, 0.5f, 1.0f);
-  // glLoadIdentity();
   glPushMatrix();
   ModuleCamera::moveCamera();
   if (!selectingMode) showOrts();
   showWorld();
 
   glPopMatrix();
-  // SwapBuffers (HDC);
-  // double x, y, z;
-  // int xpos, ypos;
-  // ModuleCamera::getMousePos(&xpos, &ypos);
-  // clientToOpenGL(xpos, ypos, &x, &y, &z);
-  // qDebug() << x << y << z;
-  // if (getNearObject(x, y, z)) {
-  // }
 }
 
 void MainScene::showWorld() {
@@ -95,7 +56,6 @@ void MainScene::showWorld() {
 	cubeList[i].setSelectingMode(false);
 	cubeList[i].show();
   }
-  // glPopMatrix();
 }
 
 void MainScene::showMaskWorld() {
@@ -185,10 +145,10 @@ void MainScene::selectObject() {
   GLubyte color[3];
   hwnd = (HWND)this->winId();
   GetClientRect(hwnd, &rect);  // (последнее) ошибка тут, не верно считается область, но ёмаё, а какая разница то, как считать координаты?
-  qDebug() << hwnd<<rect.top <<rect.left<<rect.right<<rect.bottom;
+  qDebug() << hwnd << rect.top << rect.left << rect.right << rect.bottom;
   qDebug() << rect.bottom - mousePos[1];
   glReadPixels(mousePos[0], mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // вот так он хоть что-то видит
-  //glReadPixels(mousePos[0], rect.bottom - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // ЧТО ТО НЕ ТАК С ЭТОЙ ШТУКОЙ
+  // glReadPixels(mousePos[0], rect.bottom - mousePos[1], 1, 1, GL_RGB, GL_UNSIGNED_BYTE, color);  // ЧТО ТО НЕ ТАК С ЭТОЙ ШТУКОЙ
   qDebug() << color[0] << color[1] << color[2];
 
   int r = 0;
@@ -216,7 +176,6 @@ void MainScene::cubeCreateSlot(vec3 _centerPoint, float _edge, GLubyte _edgeRed,
 							   bool _isPlaneEneble, vec3 _rotation) {
   cubeList.append(Cube(_centerPoint, _edge, _edgeRed, _edgeGreen, _edgeBlue, _edgeAlpha, _planeRed, _planeGreen, _planeBlue, _planeAlpha,
 					   _isEdgeEneble, _isPlaneEneble, _rotation, ID));
-  //++ID;
   ID += IDShift;
 }
 
